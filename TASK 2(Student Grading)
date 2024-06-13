@@ -1,0 +1,103 @@
+import java.util.*;
+
+class Studentgradecalculator {
+    static class Pair {
+        String subName;
+        int marks;
+        char grade;
+        
+        Pair(String subName, int marks, char grade) {
+            this.subName = subName;
+            this.marks = marks;
+            this.grade = grade;
+        }
+
+        @Override
+        public String toString() {
+            return "Subject: " + subName + ", Marks: " + marks + ", Grade: " + grade;
+        }
+    }
+
+    public static char calGrade(int n) {
+        switch (n / 10) {
+            case 10:
+            case 9:
+                return 'O';  
+            case 8:
+                return 'A';  
+            case 7:
+                return 'B';  
+            case 6:
+                return 'C';  
+            case 5:
+                return 'D';  
+            default:
+                return (n < 50 && n >= 0) ? 'F' : ' '; 
+        }
+    }
+
+    public static double calPer(ArrayList<Pair> al) {
+        int tMarks = 0;
+        for (Pair cur : al) {
+            tMarks += cur.marks;
+        }
+        return (double) tMarks / al.size();
+    }
+    
+    public static int calTmarks(ArrayList<Pair> al) {
+        int tMarks = 0;
+        for (Pair cur : al) {
+            tMarks += cur.marks;
+        }
+        return tMarks;
+    }
+    
+    public static double calAvgGrade(ArrayList<Pair> al) {
+        int gradeSum = 0;
+        for (Pair cur : al) {
+            gradeSum += cur.grade;
+        }
+        return (double) gradeSum / al.size();
+    }
+
+    public static String checkPass(int totalMarks, int numSubjects) {
+        int maxMarks = numSubjects * 100;
+        double percentage = ((double) totalMarks / maxMarks) * 100;
+
+        if (percentage > 75) {
+            return "Distinction";
+        } else if (percentage >= 60 && percentage <= 75) {
+            return "First Class";
+        } else {
+            return "Fail";
+        }
+    }
+
+    public static void main(String args[]) {
+        Scanner sc = new Scanner(System.in);
+        ArrayList<Pair> al = new ArrayList<>();
+        
+        System.out.println("Enter the Number of Subjects:");
+        int n = sc.nextInt();
+        sc.nextLine(); 
+
+        for (int i = 1; i <= n; i++) {
+            System.out.println("Enter the name of subject " + i + ":");
+            String sub = sc.nextLine();
+            System.out.println("Enter the marks for " + sub + ":");
+            int mar = sc.nextInt();
+            sc.nextLine();  // Consume the newline
+            
+            al.add(new Pair(sub, mar, calGrade(mar)));
+        }
+        
+        int totalMarks = calTmarks(al);
+        System.out.println("\nTotal Marks: " + totalMarks);
+        System.out.println("Your Percentage is: " + calPer(al));
+        System.out.println("Your Report Card:");
+        for (Pair cur : al) {
+            System.out.println(cur);
+        }
+        System.out.println("Result: " + checkPass(totalMarks, al.size()));
+    }
+}
