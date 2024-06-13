@@ -1,0 +1,50 @@
+import java.util.*;
+
+class NumberGame {
+    public static void main(String args[]) {
+        Random r = new Random();
+        Scanner sc = new Scanner(System.in);
+
+        int c;
+        while (true) {
+            System.out.println("Enter the number of choices you want (between 1 and 5):");
+            c = sc.nextInt();
+            if (c >= 1 && c <= 5) {
+                break;
+            } else {
+                System.out.println("Invalid number of choices. Please enter a number between 1 and 5.");
+            }
+        }
+        
+
+        int maxScore = 0;
+        int count = 0;
+        int attemptsLeft = c;
+
+        while (attemptsLeft > 0) {
+            int n = r.nextInt(101);
+            System.out.println("Random number generated (for debugging): " + n);  
+            System.out.println("Enter your guessed number: ");
+            int u1 = sc.nextInt();
+
+            if (u1 == n) {
+                count++;
+                System.out.println("Congratulations! You guessed the correct number.");
+            } else{
+                 if (u1 > n) {
+                System.out.println("Your guess is too high.");
+            } else {
+                System.out.println("Your guess is too low.");
+              
+            }
+            attemptsLeft--;
+            }
+
+             System.out.println("Your current score is: " + count);
+            System.out.println("You have " + attemptsLeft + " attempts left.");
+        }
+
+        maxScore = Math.max(count, maxScore);
+        System.out.println("Game over. Your highest score is: " + maxScore);
+    }
+}
